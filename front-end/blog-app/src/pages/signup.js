@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import axios from "axios"
+import {useNavigate} from 'react-router-dom'
 
 function Signup() {
+  const navigate = useNavigate();
   const [input,setInput] = useState({
     username:'',
     email:'',
@@ -12,6 +14,9 @@ function Signup() {
     try {
       const res = await axios.post("http://localhost:8800/api/auth/register", input);
       console.log(res);
+      if(res.status){
+        navigate('/login')
+      }
     } catch (error) {
       console.error('Axios Error alif:', error);
     }

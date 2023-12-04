@@ -1,13 +1,14 @@
 import React from 'react'
 
-function Navbar() {
+function Navbar({username}) {
   return (
     <div className='navbar'>
       <div className='fbox'>
-        <h1>heading</h1>
+        <h1>{username}</h1>
       </div>
       <div className='sbox'>
-        <button className='login'>login</button>
+        <button className='login'>write</button>
+        <button className='login'>logout</button>
       </div>
     </div>
   )
