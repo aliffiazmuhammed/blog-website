@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios'
+import {useNavigate} from 'react-router-dom'
 
 function HomeContent({userid}) {
+  const navigate = useNavigate();
 
   const [data,setdata] = useState([])
   const input = {uid:userid}
@@ -19,7 +21,7 @@ useEffect(() => {
   };
 
   getuserdata();
-}, [userid]);
+}, [userid,data]);
 
 
   useEffect(() => {
@@ -28,8 +30,19 @@ useEffect(() => {
   
   const handleClick = (id) => {
     // Handle the click with the id
-    console.log(`Button clicked for row with id: ${id}`);
+    navigate(`/post/${id}`);
   };
+
+  const handledelete=async(id)=>{
+    try {
+      const data = await axios.post("http://localhost:8800/api/posts/delete-post",{
+      id: id,
+      })
+      setdata((prevData) => prevData.filter(post => post.id !== id));
+    } catch (error) {
+      console.log(error)
+    }
+  }
 
 
   return (
@@ -49,7 +62,8 @@ useEffect(() => {
                     return(
                         <tr key={d.id}>
                           <td >{index}</td>
-                          <td ><button onClick={() => handleClick(d.id)}>{d.title}</button></td>
+                          <td ><button onClick={() => handleClick(d.id)} className='hbutton'>{d.title}</button></td>
+                          <td><button className='h2button' onClick={() => handledelete(d.id)}>delete</button></td>
                         </tr>
                     )
                 })

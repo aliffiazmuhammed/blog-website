@@ -68,7 +68,7 @@ function Write() {
                 type='text' 
                 placeholder='title' onChange={handlechange}/ >
             <textarea className='formin' type='textarea'
-                name='description'
+                name='description' maxLength='10000'
                 placeholder='description' onChange={handlechange}/>
                 <button className='lbutton' onClick={handleSubmit}>submit</button>
         </form>
