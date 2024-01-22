@@ -1,8 +1,22 @@
-import React,{ useState } from 'react'
+import React,{ useState,useReducer } from 'react'
 import {useNavigate} from 'react-router-dom'
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 function Login() {
+
+  const vallidationFormat = {
+    position: "top-right",
+    autoClose: 8000,
+    hideProgressBar: false,
+    closeOnClick: true,
+    pauseOnHover: true,
+    draggable: true,
+    progress: undefined,
+    theme: "colored",
+    }
+
   const navigate = useNavigate();
   const [input,setInput] = useState({
     username:'',
@@ -19,6 +33,7 @@ function Login() {
         console.log(res.data.user.id)
       }
     } catch (error) {
+      toast.error("invalid login", vallidationFormat );
       console.log(error)
     }
     
@@ -33,21 +48,29 @@ function Login() {
   }
 
   return (
+<>
     <div className='login'>
         <div className='innerbox'>
         <h1>USER LOG IN</h1>
         <form className='form' >
             <input className='formin' name="username" 
                 type='text' 
-                placeholder='username' onChange={handlechange}/ >
+                placeholder='username' onChange={handlechange} autoComplete='off'/ >
             <input className='formin' type='password'
                 name='password'
-                placeholder='password' onChange={handlechange}/>
+                placeholder='password' onChange={handlechange} autoComplete='off'/>
+                <p>not yet <a href='/signup'>registred</a>?</p>
                 <button className='lbutton' onClick={handleSubmit}>submit</button>
         </form>
+        
         </div>
-
+        
     </div>
+    <ToastContainer/>
+    </>
+    
+  
+    
   )
 }
 
